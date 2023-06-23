@@ -8,6 +8,7 @@ import {
   isResourceEntity,
   isUserEntity,
   isComponentEntity,
+  GroupEntity,
 } from '@backstage/catalog-model';
 import { BlockchainAdapter } from '../adapters/BlockchainAdapter';
 import {
@@ -172,6 +173,16 @@ export interface OptimizerDetails {
 export interface YulDetails {
   stackAllocation?: boolean;
   optimizerSteps?: string;
+}
+
+type BlockchainRoleGroupSpec = GroupEntity['spec'] & {
+  admins: string[] | undefined;
+};
+
+export interface BlockchainRoleGroup extends GroupEntity {
+  spec: {
+    [K in keyof BlockchainRoleGroupSpec]: BlockchainRoleGroupSpec[K];
+  };
 }
 
 export interface BlockchainUser extends UserEntity {
